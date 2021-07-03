@@ -25,13 +25,11 @@ export const Orders = () => {
   let orderBuyerStatusOptions = [{name: 'All', value: 'ALL'}];
   orderBuyerStatusOptions.push(...orderStatus.map(status =>  Object.assign({}, {name: status, value: status})));
 
-  const dispatch = useDispatch()
-  const [orders, setOrders] = useState([]);
+  const dispatch = useDispatch();
   
-
   useEffect(() => {
     dispatch(getOrdersAsync());
-  }, [ ])
+  })
 
   const getOrderStatusBadge = (orderStatus) => {
     const status = orderStatus ? orderStatus.toLowerCase() : '';
