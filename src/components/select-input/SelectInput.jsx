@@ -9,7 +9,6 @@ import { StyledSelectWrapper, StyledSelectInput, StyledSelectLabel, StyledSelect
 
  useEffect(() => {
   setValue(value);
-  console.log('onChange');
    return () => {
      // cleanup
    }
@@ -73,5 +72,3 @@ SelectInput.defaultProps = {
   value:1,
   data: [{name: 'All', value: 1}, {name: 'name2', value: 2}]
 };
-
-//export const SelectInput = React.memo(SelectInputComponent);

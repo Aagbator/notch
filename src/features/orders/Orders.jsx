@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrdersAsync, receiveOrders, setStatusFilter, setSupplierFilter } from './ordersSlice';
-import { selectSuppliers, selectOrders, selectOrderStatus, filteredOrders } from './Orders.selector';
-import { orderData } from './data';
+import { getOrdersAsync, setStatusFilter, setSupplierFilter } from './ordersSlice';
+import { selectSuppliers, selectOrders, selectOrderStatus } from './Orders.selector';
 import { Header } from '../../components/header/Header';
 import { Button } from '../../components/button/Button';
 import { Badge } from '../../components/badge/Badge';
 import { SelectInput } from '../../components/select-input/SelectInput';
 import { Banner, FormWrapper, SelectWrapper, Mainsection, Table, 
-  TableHeader, TableRow , TableCol} from './Orders.styles';
+  TableHeader, TableRow , TableCol, Loader, Spinner} from './Orders.styles';
 import { formatDate } from '../../utils/DateUtils';
 
 export const Orders = () => {
@@ -29,18 +27,11 @@ export const Orders = () => {
 
   const dispatch = useDispatch()
   const [orders, setOrders] = useState([]);
-  // const [orderStatusFiter, setOrderStatusFilter] = useState('');
   
 
   useEffect(() => {
-    // dispatch(getOrdersAsync());
-    dispatch(receiveOrders(orderData));
-    console.log(ordersData);
-    // return () => {
-    //   cleanup
-    // }
-    setOrders(ordersData);
-  }, [ordersData])
+    dispatch(getOrdersAsync());
+  }, [ ])
 
   const getOrderStatusBadge = (orderStatus) => {
     const status = orderStatus ? orderStatus.toLowerCase() : '';
@@ -70,7 +61,6 @@ export const Orders = () => {
   const filterOrderByStatus = (e) => {
     const value = e.target.value;
     dispatch(setStatusFilter(value));
-    
   }
 
   const filterOrderBySupplier = (e) => {
@@ -78,11 +68,40 @@ export const Orders = () => {
     dispatch(setSupplierFilter(value));
   }
 
+  const filterOrders = orders => {
+    const statusFilter = orderStatusFilter;
+    const supplierFilter = orderSupplierFilter;
+
+    var filterObj = {
+      orderBuyerStatus: statusFilter,
+      vendorName: supplierFilter
+    };
+
+    const filteredOrders = orders.filter(function(item) {
+
+      for (const key in filterObj) {
+        if(filterObj[key] === 'ALL'){
+          return true;
+        }
+    
+        if (item[key] === undefined || item[key] !== filterObj[key]){
+          return false;
+        }
+      }
+      return true;
+    
+    });
+    return filteredOrders;
+  }
+
 
   return (
     <>
      { isFetchingOrders ?
-      <h1>loading...</h1>
+      <Loader>
+        <Spinner />
+        <span>Loading Orders, please wait...</span>
+      </Loader>
       :
       <>
         <Header variant="primary" />
@@ -114,8 +133,8 @@ export const Orders = () => {
               <TableCol width={50} role="cell">Supplier</TableCol>
               <TableCol width={10} role="cell">Total</TableCol>
             </TableHeader>
-            { orders && orders.length > 0 ?
-               orders.map(({
+            { ordersData && ordersData.length > 0 ?
+               filterOrders(ordersData).map(({
                  orderBuyerStatus, 
                  deliveryDay, 
                  isPendingVendorOnboarding, 
@@ -142,11 +161,4 @@ export const Orders = () => {
     }
     </>
   )
-};
-Orders.propTypes = {
-  user: PropTypes.shape({}),
-};
-
-Orders.defaultProps = {
-  user: null,
 };

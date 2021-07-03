@@ -3,7 +3,6 @@ import axios from "axios";
 
 const initialState = {
     orders: [],
-    filteredOrders: [],
     statusFilterValue: 'ALL',
     supplierFilterValue: 'ALL',
     isFetchingOrders: false
@@ -15,7 +14,6 @@ const orderSlice = createSlice({
     reducers: {
         receiveOrders(state, action) {
             state.orders =  action.payload
-            // state.filteredOrders = state.orders //orderBuyerStatus
         },
         setSupplierFilter(state, action) {
             state.supplierFilterValue = action.payload
