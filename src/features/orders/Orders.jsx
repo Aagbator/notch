@@ -31,7 +31,7 @@ export const Orders = () => {
   useEffect(() => {
     // dispatch(getOrdersAsync());
     dispatch(receiveOrders(orderData));
-  }, [])
+  }, [dispatch])
 
   const getOrderStatusBadge = (orderStatus) => {
     const status = orderStatus ? orderStatus.toLowerCase() : '';
