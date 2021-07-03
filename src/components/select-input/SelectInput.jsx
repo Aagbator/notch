@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import { oneOf, func, string, arrayOf, shape, any } from 'prop-types';
-import { StyledSelectWrapper, StyledSelectInput, StyledSelectLabel, StyledSelect } from "./SelectInput.styles.jsx"
+import { StyledSelectWrapper, StyledSelectInput, StyledSelectLabel, StyledSelect } from "./SelectInput.styles.jsx";
 
-export const SelectInput = ({ label, variant, data, onChange, ...props}) => {
+ export const SelectInput = ({ label, variant, value, data, onChange, ...props}) => {
+  
 
- const [options, setOptions] = useState([]);
+ const [val, setValue] = useState('');
 
  useEffect(() => {
-  setOptions(options);
+  setValue(value);
    return () => {
      // cleanup
    }
- }, [options])
+ }, [value])
+
 
   // check if the data is valid 
   if(!Array.isArray(data) || 
@@ -20,7 +22,6 @@ export const SelectInput = ({ label, variant, data, onChange, ...props}) => {
     typeof data[0]['value'] == 'undefined' ) {
       return false;
   }
-
   
   const selectOptions = data.map((option, index) => (
     <option key={index} value={option.value}>{option.name}</option>
@@ -28,15 +29,13 @@ export const SelectInput = ({ label, variant, data, onChange, ...props}) => {
   
   return (
     <StyledSelectInput
-      type="button"
       variant={variant}
-      onChange={onChange}
       data={data}
       {...props}
     >
       {label && (<StyledSelectLabel>{label}</StyledSelectLabel>)}
       <StyledSelectWrapper variant={variant}>
-        <StyledSelect variant={variant}>
+        <StyledSelect onChange={(e) => onChange(e)} variant={variant} value={val}>
           {selectOptions}
         </StyledSelect>
       </StyledSelectWrapper>
@@ -49,6 +48,11 @@ SelectInput.propTypes = {
    * Label text
    */
    label: string,
+  /**
+   * default selected value
+   */
+   value: string,
+   
   /**
    * What color should the button be?
    */
@@ -65,5 +69,6 @@ SelectInput.propTypes = {
 
 SelectInput.defaultProps = {
   variant:"default",
-  data: [{name: 'name1', value: 1}, {name: 'name2', value: 2}]
+  value:1,
+  data: [{name: 'All', value: 1}, {name: 'name2', value: 2}]
 };

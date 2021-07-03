@@ -1,15 +1,24 @@
+import React from 'react';
+import { Provider } from 'react-redux'
+
 import GlobalStyles from "../src/theme/globalStyles";
 import themeDefault from "../src/theme/themeDefault";
 import { ThemeProvider } from "styled-components";
 
-import { Home } from './pages/Home/Home';
+import { Orders } from './features/orders/Orders';
+import { store } from '../src/app/store';
 
 function App() {
   return (
-    <ThemeProvider theme={themeDefault}>
-      <GlobalStyles />
-      <Home />
-    </ThemeProvider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <ThemeProvider theme={themeDefault}>
+          <GlobalStyles />
+          <Orders />
+        </ThemeProvider>
+      </Provider>
+    </React.StrictMode>
+    
   );
 }
 

@@ -56,21 +56,9 @@ const GlobalStyle = createGlobalStyle`
 			min-height: 100vh;
 		}
 	}
-	.grid {
-		margin: 0 auto;
-		max-width: ${props => props.theme.gridMax};
-		padding: 0 30px;
-	}
 	/* Common base styles for the site */
 	figure, img, svg, video {
 		max-width: 100%;
-	}
-	figure {
-		width: auto !important;
-	}
-	video {
-		display: block;
-		width: 100%;
 	}
 	h1, h2, h3, h4, h5, h6 {
 		line-height: 1.25;
@@ -135,11 +123,6 @@ const GlobalStyle = createGlobalStyle`
 		font-weight: bold;
 		padding: .2rem;
     	text-transform: capitalize;
-	}
-	textarea {
-		min-height: 150px;
-		resize: vertical;
-		width: 100%;
 	}
 	option {
 		padding: 16px;
