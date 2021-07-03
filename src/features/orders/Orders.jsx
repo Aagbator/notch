@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrdersAsync, setStatusFilter, setSupplierFilter } from './ordersSlice';
+import { receiveOrders, setStatusFilter, setSupplierFilter } from './ordersSlice';
 import { selectSuppliers, selectOrders, selectOrderStatus } from './Orders.selector';
 import { Header } from '../../components/header/Header';
 import { Button } from '../../components/button/Button';
@@ -9,6 +9,7 @@ import { SelectInput } from '../../components/select-input/SelectInput';
 import { Banner, FormWrapper, SelectWrapper, Mainsection, Table, 
   TableHeader, TableRow , TableCol, Loader, Spinner} from './Orders.styles';
 import { formatDate } from '../../utils/DateUtils';
+import { orderData } from './data'
 
 export const Orders = () => {
 
@@ -28,8 +29,9 @@ export const Orders = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(getOrdersAsync());
-  })
+    // dispatch(getOrdersAsync());
+    dispatch(receiveOrders(orderData));
+  }, [])
 
   const getOrderStatusBadge = (orderStatus) => {
     const status = orderStatus ? orderStatus.toLowerCase() : '';
