@@ -89,8 +89,11 @@ export const Orders = () => {
       if (order['vendorName'] === supplierFilter && statusFilter === 'ALL'){
         return true;
       }
+      return false;
     });
+
     return filteredOrders;
+    
   }
 
 
