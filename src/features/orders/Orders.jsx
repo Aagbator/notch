@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrdersAsync, setStatusFilter, setSupplierFilter } from './ordersSlice';
+import { receiveOrders, setStatusFilter, setSupplierFilter } from './ordersSlice';
 import { selectSuppliers, selectOrders, selectOrderStatus } from './Orders.selector';
 import { Header } from '../../components/header/Header';
 import { Button } from '../../components/button/Button';
@@ -26,10 +26,10 @@ export const Orders = () => {
   let orderBuyerStatusOptions = [{name: 'All', value: 'ALL'}];
   orderBuyerStatusOptions.push(...orderStatus.map(status =>  Object.assign({}, {name: status, value: status})));
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()  ;
   
   useEffect(() => {
-    dispatch(orderData);
+    dispatch(receiveOrders(orderData));
   }, [dispatch])
 
   const getOrderStatusBadge = (orderStatus) => {
@@ -72,12 +72,7 @@ export const Orders = () => {
     const supplierFilter = orderSupplierFilter;
     
 
-    // var filterObj = {
-    //   orderBuyerStatus: statusFilter,
-    //   vendorName: supplierFilter
-    // };
-    const filteredOrders = orders.filter(order => {
-
+    const filteredOrders = orders.filter((order) => {
       if (statusFilter === 'ALL' && supplierFilter === 'ALL'){
         return true;
       }
@@ -94,7 +89,6 @@ export const Orders = () => {
       if (order['vendorName'] === supplierFilter && statusFilter === 'ALL'){
         return true;
       }
-      
     });
     return filteredOrders;
   }
