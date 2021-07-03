@@ -69,25 +69,31 @@ export const Orders = () => {
   const filterOrders = orders => {
     const statusFilter = orderStatusFilter;
     const supplierFilter = orderSupplierFilter;
-
-    var filterObj = {
-      orderBuyerStatus: statusFilter,
-      vendorName: supplierFilter
-    };
-
-    const filteredOrders = orders.filter(function(item) {
-
-      for (const key in filterObj) {
-        if(filterObj[key] === 'ALL'){
-          return true;
-        }
     
-        if (item[key] === undefined || item[key] !== filterObj[key]){
-          return false;
-        }
+
+    // var filterObj = {
+    //   orderBuyerStatus: statusFilter,
+    //   vendorName: supplierFilter
+    // };
+    const filteredOrders = orders.filter(order => {
+
+      if (statusFilter === 'ALL' && supplierFilter === 'ALL'){
+        return true;
       }
-      return true;
-    
+
+      if (order['orderBuyerStatus'] === statusFilter 
+      && order['vendorName'] === supplierFilter){
+        return true;
+      }
+
+      if (supplierFilter === 'ALL' && order['orderBuyerStatus'] ===  statusFilter){
+        return true;
+      }
+
+      if (order['vendorName'] === supplierFilter && statusFilter === 'ALL'){
+        return true;
+      }
+      
     });
     return filteredOrders;
   }
