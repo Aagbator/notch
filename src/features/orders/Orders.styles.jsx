@@ -1,4 +1,4 @@
-import styled, { css, div} from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { device } from "../../theme/mediaQueries";
 
 
@@ -102,3 +102,39 @@ color:  ${props => props.theme.dark};
   flex-basis: ${props => props.width ? `${props.width}%` : '100%'};
 }
 `
+
+export const Loader = styled.div`
+  display: flex;
+  background:  ${props => props.width}
+  display: flex;           
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh;
+`;
+
+
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Spinner = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+
+  border-top: 2px solid ${props => props.theme.primary};
+  border-right: 2px solid ${props => props.theme.primary};
+  border-bottom: 2px solid ${props => props.theme.primary};
+  border-left: 5px solid ${props => props.theme.primary};
+  background: transparent;
+  margin-bottom: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+`;
+
