@@ -9,6 +9,7 @@ import { SelectInput } from '../../components/select-input/SelectInput';
 import { Banner, FormWrapper, SelectWrapper, Mainsection, Table, 
   TableHeader, TableRow , TableCol, Loader, Spinner} from './Orders.styles';
 import { formatDate } from '../../utils/DateUtils';
+import { orderData } from './data';
 
 export const Orders = () => {
 
@@ -28,7 +29,7 @@ export const Orders = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(getOrdersAsync());
+    dispatch(orderData);
   }, [dispatch])
 
   const getOrderStatusBadge = (orderStatus) => {
